@@ -13,6 +13,7 @@ module.exports = {
     path: path.resolve(__dirname, './src/lib'),
     pathinfo: true,
     filename: 'bundle.js',
+    publicPath: 'lib',
     devtoolModuleFilenameTemplate: info =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
   },
