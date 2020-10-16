@@ -1,5 +1,8 @@
 import getCommitData from './util/db/getCommitData';
 import PouchDB from 'pouchdb';
+import * as pouchdb_upsert from 'pouchdb-upsert';
+
+PouchDB.plugin(pouchdb_upsert);
 
 const db = new PouchDB('db');
 
@@ -9,18 +12,8 @@ saveData()
 
 async function saveData(type = 'commits') {
   const data = await getCommitData();
-  try {
-    const doc = await db.get(type);
-    return await db.put({
-      _id: type,
-      _ref: doc._ref,
-      [type]: data
-    });
-  } catch (err) {
-    if (err.status !== 404) return err;
-    return await db.put({
-      _id: type,
-      [type]: data
-    });
-  }
+  return db.upsert(type, doc => {
+    doc[type] = data;
+    return doc;
+  });
 }
