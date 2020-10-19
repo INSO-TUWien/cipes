@@ -12,7 +12,11 @@ export {graphQl};
 const isNewPageRequired = page => page.data.length + (page.page - 1) * page.perPage < page.count;
 
 export function traversePages(getPage, fn, pageNumber = 1, perPage = 1000) {
-  return Promise.resolve(getPage(pageNumber, perPage)).then(page => {
+  const args = [];
+  if (0 < getPage.length - 2)
+    for (let i = 0; i < getPage.length - 2; i++)
+      args[i] = i % 2 === 0 ? 1 : 1;
+  return Promise.resolve(getPage(pageNumber, perPage, ...args)).then(page => {
     _.each(page.data, d => fn.call(null, d, page));
     if (isNewPageRequired(page)) {
       return traversePages(getPage, fn, pageNumber + 1, perPage);
@@ -29,10 +33,11 @@ export function traversePageWithSubPages(getPage, fn) {
     .then(promises => promises.length > 0 ? Promise.all(promises) : Promise.resolve(null))
     .then(resolveRecursivePromise)
     .then(data => {
-      data.forEach(dataItem => dataItem.list.forEach(item => {
-        const found = list.find(i => i.sha === item.sha);
-        found[dataItem.page.key].data.unshift(...item[dataItem.page.key].data);
-      }));
+      if (data)
+        data.forEach(dataItem => dataItem.list.forEach(item => {
+          const found = list.find(i => i.sha === item.sha);
+          found[dataItem.page.key].data.unshift(...item[dataItem.page.key].data);
+        }));
       const keys = getKeyAttributes(list);
       _.each(list.map(item => {
         delete item._page;
@@ -43,7 +48,7 @@ export function traversePageWithSubPages(getPage, fn) {
 
 
   function traverseSubPages(getPage, page, data = []) {
-    return Promise.resolve(getPage(page.rootPage.pageNumber, page.rootPage.perPage,
+    return Promise.resolve(getPage(page.rootPage.page, page.rootPage.perPage,
       page.page.page + 1, page.page.perPage)).then(rootPage => {
       data.push({page, list: rootPage.data});
       const uniquePages = getUniquePagesWhichNeedUpdateFromList(rootPage.data, page.rootPage);
