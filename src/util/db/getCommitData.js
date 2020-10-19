@@ -14,39 +14,39 @@ export default async function getCommitData() {
 }
 
 const getCommitsPage = () => (page, perPage) => {
-  return graphQl.query(
-    `query($page: Int, $perPage: Int) {
-             commits(page: $page, perPage: $perPage) {
-               count
-               page
-               perPage
-               data {
-                 sha
-                 shortSha
-                 signature
-                 date
-                 message
-                 messageHeader
-                 webUrl
-                 # files are paginated
-                 stakeholder {
-                   id
-                   gitSignature
-                   gitlabName
-                   gitlabAvatarUrl
-                   gitlabWebUrl
-                 }
-                 builds {
-                   id
-                   sha
-                 }
-                 stats {
-                   additions
-                   deletions
-                 }
-               }
-             }
-          }`,
+  return graphQl.query(`
+    query($page: Int, $perPage: Int) {
+      commits(page: $page, perPage: $perPage) {
+        count
+        page
+        perPage
+        data {
+          sha
+          shortSha
+          signature
+          date
+          message
+          messageHeader
+          webUrl
+          # files are paginated
+          stakeholder {
+            id
+            gitSignature
+            gitlabName
+            gitlabAvatarUrl
+            gitlabWebUrl
+          }
+          builds {
+            id
+            sha
+          }
+          stats {
+            additions
+            deletions
+          }
+        }
+      }
+    }`,
     {page, perPage}
   )
     .then(resp => resp.commits);

@@ -19,8 +19,7 @@ export default async function getBuildData() {
 }
 
 const getBuildsPage = (page, perPage) => {
-  return graphQl
-    .query(`
+  return graphQl.query(`
     query($page: Int, $perPage: Int) {
       builds(page: $page, perPage: $perPage) {
         count
@@ -64,7 +63,7 @@ const getBuildsPage = (page, perPage) => {
         }
       }
     }`,
-      {page, perPage}
-    )
+    {page, perPage}
+  )
     .then(resp => resp.builds);
 };
