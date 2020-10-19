@@ -12,16 +12,30 @@ const types = {
   stakeholders: getStakeholderData
 };
 
-Promise.all(Object.keys(types).map(async type => {
-  const typeFn = types[type] || types['commits'];
-  const data = await typeFn();
-  return {type, data};
-})).then(result => {
+init();
+
+function init() {
+  loadData().then(mapData).then(saveData);
+}
+
+function loadData() {
+  return Promise.all(Object.keys(types).map(async type => {
+    const typeFn = types[type] || types['commits'];
+    const data = await typeFn();
+    return {type, data};
+  }));
+}
+
+function mapData(result) {
   const data = {};
   Object.keys(types).forEach(type => data[type] =
     result.find(item => item.type === type).data
   );
   return data;
-}).then(data => fs.writeFile('db.json', JSON.stringify(data), () => {
-  console.log('data successfully saved');
-}));
+}
+
+function saveData(data) {
+  fs.writeFile('db.json', JSON.stringify(data), () => {
+    console.log('data successfully saved');
+  });
+}
