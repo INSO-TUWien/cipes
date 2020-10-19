@@ -4,14 +4,12 @@ import {graphQl, traversePages} from '../index';
 import getBounds from './getBounds';
 
 export default async function getCommitData() {
-  let {lastCommit} = await getBounds();
-  let commitList = [];
+  const {lastCommit} = await getBounds();
+  const commitList = [];
 
   return await traversePages(getCommitsPage(lastCommit.date), commit => {
     commitList.push(commit);
-  }).then(function() {
-    return commitList;
-  });
+  }).then(() => commitList);
 }
 
 const getCommitsPage = until => (page, perPage) => {
