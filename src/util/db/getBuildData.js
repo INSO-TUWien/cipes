@@ -20,8 +20,7 @@ export default async function getBuildData() {
 
 const getBuildsPage = (page, perPage) => {
   return graphQl
-    .query(
-      `
+    .query(`
     query($page: Int, $perPage: Int) {
       builds(page: $page, perPage: $perPage) {
         count
@@ -30,7 +29,32 @@ const getBuildsPage = (page, perPage) => {
         count
         data {
           id
+          sha
+          beforeSha
+          ref
+          status
           createdAt
+          updatedAt
+          startedAt
+          finishedAt
+          committedAt
+          duration
+          coverage
+          webUrl
+          jobs {
+            id
+            name
+            status
+            stage
+            webUrl
+            createdAt
+            finishedAt
+          }
+          commit {
+            sha
+            message
+            messageHeader
+          }
           stats {
             success
             failed

@@ -1,30 +1,45 @@
 'use strict';
 
 import {graphQl, traversePages} from '../index';
-import getBounds from './getBounds';
 
 export default async function getCommitData() {
-  const {lastCommit} = await getBounds();
   const commitList = [];
 
-  return await traversePages(getCommitsPage(lastCommit.date), commit => {
+  return await traversePages(getCommitsPage(), commit => {
+    const cleanedHeader = commit.message.replace(commit.messageHeader, '');
+    if (0 < cleanedHeader.trim().length)
+      commit.messageBody = cleanedHeader.trim();
     commitList.push(commit);
   }).then(() => commitList);
 }
 
-const getCommitsPage = until => (page, perPage) => {
-  return graphQl
-    .query(
-      `query($page: Int, $perPage: Int, $until: Timestamp) {
-             commits(page: $page, perPage: $perPage, until: $until) {
+const getCommitsPage = () => (page, perPage) => {
+  return graphQl.query(
+    `query($page: Int, $perPage: Int) {
+             commits(page: $page, perPage: $perPage) {
                count
                page
                perPage
                data {
                  sha
-                 date
-                 messageHeader
+                 shortSha
                  signature
+                 date
+                 message
+                 messageHeader
+                 webUrl
+                 # files are paginated
+                 stakeholder {
+                   id
+                   gitSignature
+                   gitlabName
+                   gitlabAvatarUrl
+                   gitlabWebUrl
+                 }
+                 builds {
+                   id
+                   sha
+                 }
                  stats {
                    additions
                    deletions
@@ -32,7 +47,7 @@ const getCommitsPage = until => (page, perPage) => {
                }
              }
           }`,
-      {page, perPage, until}
-    )
+    {page, perPage}
+  )
     .then(resp => resp.commits);
 };

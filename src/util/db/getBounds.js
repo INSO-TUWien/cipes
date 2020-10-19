@@ -3,9 +3,8 @@
 import {graphQl} from '../';
 
 export default function getBounds() {
-  return graphQl
-    .query(
-      `{
+  return graphQl.query(
+    `{
          committers
          firstCommit: commits( perPage: 1, sort: "ASC" ) {
            data {
@@ -32,12 +31,11 @@ export default function getBounds() {
            }
          }
        }`
-    )
-    .then(resp => ({
-      firstCommit: resp.firstCommit.data[0],
-      lastCommit: resp.lastCommit.data[0],
-      firstIssue: resp.firstIssue.data[0],
-      lastIssue: resp.lastIssue.data[0],
-      committers: resp.committers
-    }));
+  ).then(resp => ({
+    firstCommit: resp.firstCommit.data[0],
+    lastCommit: resp.lastCommit.data[0],
+    firstIssue: resp.firstIssue.data[0],
+    lastIssue: resp.lastIssue.data[0],
+    committers: resp.committers
+  }));
 }

@@ -1,36 +1,46 @@
 'use strict';
 
 import {graphQl, traversePages} from '../.';
-import getBounds from './getBounds';
 
 export default async function getIssueData() {
-  const {lastIssue} = await getBounds();
-  if (!lastIssue) return [];
   const issueList = [];
 
-  return traversePages(getIssuesPage(lastIssue.createdAt), issue => {
+  return traversePages(getIssuesPage(), issue => {
     issueList.push(issue);
   }).then(() => issueList);
 }
 
-const getIssuesPage = until => (page, perPage) => {
-  return graphQl
-    .query(
-      `
-    query($page: Int, $perPage: Int, $until: Timestamp) {
-      issues(page: $page, perPage: $perPage, until: $until) {
+const getIssuesPage = () => (page, perPage) => {
+  return graphQl.query(`
+    query($page: Int, $perPage: Int) {
+      issues(page: $page, perPage: $perPage) {
         count
         page
         perPage
         count
         data {
+          id
+          iid
           title
-          createdAt
+          description
+          state
           closedAt
+          createdAt
+          upvotes
+          downvotes
+          dueDate
+          confidential
+          weight
+          webUrl
+          mentions
+          creator {
+            id
+          }
+          # commits are paginated
         }
       }
     }`,
-      {page, perPage, until}
-    )
+    {page, perPage}
+  )
     .then(resp => resp.issues);
 };
