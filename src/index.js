@@ -1,3 +1,4 @@
+import {exec} from 'child_process';
 import * as fs from 'fs';
 import 'regenerator-runtime/runtime.js';
 import getBuildData from './util/db/getBuildData';
@@ -12,6 +13,7 @@ const types = {
   stakeholders: getStakeholderData
 };
 
+const prodServer = exec('npm run prod-server');
 init();
 
 function init() {
@@ -37,5 +39,7 @@ function mapData(result) {
 function saveData(data) {
   fs.writeFile('db.json', JSON.stringify(data), () => {
     console.log('data successfully saved');
+    prodServer.kill('SIGKILL');
+    process.exit();
   });
 }
