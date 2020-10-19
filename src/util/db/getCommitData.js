@@ -1,11 +1,12 @@
 'use strict';
 
-import {graphQl, traversePages} from '../index';
+import {traversePageWithSubPages} from '../graphQl';
+import {graphQl} from '../index';
 
 export default async function getCommitData() {
   const commitList = [];
 
-  return await traversePages(getCommitsPage(), commit => {
+  return await traversePageWithSubPages(getCommitsPage(), commit => {
     const cleanedHeader = commit.message.replace(commit.messageHeader, '');
     if (0 < cleanedHeader.trim().length)
       commit.messageBody = cleanedHeader.trim();
@@ -13,9 +14,9 @@ export default async function getCommitData() {
   }).then(() => commitList);
 }
 
-const getCommitsPage = () => (page, perPage) => {
+const getCommitsPage = () => (page, perPage, filesPage, filesPerPage) => {
   return graphQl.query(`
-    query($page: Int, $perPage: Int) {
+    query($page: Int, $perPage: Int, $filesPage: Int, $filesPerPage: Int) {
       commits(page: $page, perPage: $perPage) {
         page
         perPage
@@ -28,7 +29,25 @@ const getCommitsPage = () => (page, perPage) => {
           message
           messageHeader
           webUrl
-          # files are paginated
+          files(page: $filesPage, perPage: $filesPerPage) {
+            page
+            perPage
+            count
+            data {
+              # id
+              file {
+                id
+                path
+              }
+              lineCount
+              hunks {
+                newStart
+                newLines
+                oldStart
+                oldLines
+              }
+            }
+          }
           stakeholder {
             id
             gitSignature
@@ -47,7 +66,7 @@ const getCommitsPage = () => (page, perPage) => {
         }
       }
     }`,
-    {page, perPage}
+    {page, perPage, filesPage, filesPerPage}
   )
     .then(resp => resp.commits);
 };
