@@ -17,9 +17,9 @@ const getCommitsPage = () => (page, perPage) => {
   return graphQl.query(`
     query($page: Int, $perPage: Int) {
       commits(page: $page, perPage: $perPage) {
-        count
         page
         perPage
+        count
         data {
           sha
           shortSha

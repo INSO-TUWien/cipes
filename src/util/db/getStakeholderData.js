@@ -14,7 +14,6 @@ const getStakeholdersPage = () => (page, perPage) => {
   return graphQl.query(`
     query($page: Int, $perPage: Int) {
       stakeholders(page: $page, perPage: $perPage) {
-        count
         page
         perPage
         count

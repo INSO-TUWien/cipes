@@ -22,7 +22,6 @@ const getBuildsPage = (page, perPage) => {
   return graphQl.query(`
     query($page: Int, $perPage: Int) {
       builds(page: $page, perPage: $perPage) {
-        count
         page
         perPage
         count

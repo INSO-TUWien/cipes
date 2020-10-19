@@ -14,7 +14,6 @@ const getIssuesPage = () => (page, perPage) => {
   return graphQl.query(`
     query($page: Int, $perPage: Int) {
       issues(page: $page, perPage: $perPage) {
-        count
         page
         perPage
         count
