@@ -1,7 +1,7 @@
-import getCommitData from './util/db/getCommitData';
 import PouchDB from 'pouchdb';
 import * as pouchdb_upsert from 'pouchdb-upsert';
 import getBuildData from './util/db/getBuildData';
+import getCommitData from './util/db/getCommitData';
 import getIssueData from './util/db/getIssueData';
 
 PouchDB.plugin(pouchdb_upsert);

@@ -1,8 +1,8 @@
 'use strict';
 
-import _ from 'lodash';
 import chroma from 'chroma-js';
 import emojifyReplace from 'emoji-replace';
+import _ from 'lodash';
 
 export function endpointUrl(suffix, qs = {}) {
   const url = new URL(getBaseUrl() + suffix);

@@ -1,7 +1,7 @@
 'use strict';
 
-import _ from 'lodash';
 import Promise from 'bluebird';
+import _ from 'lodash';
 import {Lokka} from 'lokka';
 import {Transport} from 'lokka-transport-http';
 
