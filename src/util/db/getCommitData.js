@@ -1,7 +1,6 @@
 'use strict';
 
-import {traversePageWithSubPages} from '../graphQl';
-import {graphQl} from '../index';
+import {graphQl, traversePageWithSubPages} from '../.';
 
 export default async function getCommitData() {
   const commitList = [];

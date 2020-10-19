@@ -1,18 +1,18 @@
 'use strict';
 
-import {graphQl, traversePages} from '../.';
+import {graphQl, traversePageWithSubPages} from '../.';
 
 export default async function getIssueData() {
   const issueList = [];
 
-  return traversePages(getIssuesPage(), issue => {
+  return await traversePageWithSubPages(getIssuesPage(), issue => {
     issueList.push(issue);
   }).then(() => issueList);
 }
 
-const getIssuesPage = () => (page, perPage) => {
+const getIssuesPage = () => (page, perPage, commitsPage, commitsPerPage) => {
   return graphQl.query(`
-    query($page: Int, $perPage: Int) {
+    query($page: Int, $perPage: Int, $commitsPage: Int, $commitsPerPage: Int) {
       issues(page: $page, perPage: $perPage) {
         page
         perPage
@@ -35,11 +35,19 @@ const getIssuesPage = () => (page, perPage) => {
           creator {
             id
           }
-          # commits are paginated
+          commits(page: $commitsPage, perPage: $commitsPerPage) {
+            page
+            perPage
+            count
+            data {
+              sha
+              shortSha
+            }
+          }
         }
       }
     }`,
-    {page, perPage}
+    {page, perPage, commitsPage, commitsPerPage}
   )
     .then(resp => resp.issues);
 };
