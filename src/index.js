@@ -22,9 +22,22 @@ Object.keys(types).forEach(type => {
     .then(result => console.log(type, result));
 });
 
+Promise.all(Object.keys(types).map(async type => {
+  const typeFn = types[type] || types['commits'];
+  const data = await typeFn();
+  return {type, data};
+})).then(result => {
+  const data = {};
+  Object.keys(types).forEach(type => data[type] =
+    result.find(item => item.type === type).data
+  );
+  return data;
+})/*.then(data => fs.writeFile('db.json', JSON.stringify(data), () => {
+  console.log('data successfully saved');
+}))*/;
 
 async function saveData(type = 'commits') {
-  let typeFn = types[type] || types['commits'];
+  const typeFn = types[type] || types['commits'];
   const data = await typeFn();
   return db.upsert(type, doc => {
     doc[type] = data;
