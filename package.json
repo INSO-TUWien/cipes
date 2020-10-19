@@ -7,11 +7,18 @@
     "lint": "eslint .",
     "build": "webpack",
     "dev": "webpack-dev-server -d --content-base src/ --inline --hot & npm run dev-server --",
-    "dev-server": "nodemon --config .nodemonrc cipes.js --no-ci"
+    "dev-middle": "nodemon --exec babel-node --config .babelrc src/index.js",
+    "dev-server": "nodemon --config .nodemonrc cipes.js --no-ci",
+    "prod-middle": "babel src -d build && node build/index.js",
+    "prod-server": "node cipes.js --no-ci"
   },
   "author": "Raphael Lackner <code@rala.io>",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/node": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
     "arangojs": "^5.7.0",
     "archiver": "^1.3.0",
     "babel-core": "^6.26.3",

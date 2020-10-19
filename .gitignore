@@ -1,4 +1,7 @@
 .idea
 .cipesrc
+db.json
+/build
+/db
 /node_modules
 /src/lib

@@ -5,7 +5,8 @@ import _ from 'lodash';
 import {Lokka} from 'lokka';
 import {Transport} from 'lokka-transport-http';
 
-const graphQl = new Lokka({transport: new Transport('/graphQl')});
+const apiPath = 'http://localhost:48763';
+const graphQl = new Lokka({transport: new Transport(apiPath + '/graphQl')});
 
 export {graphQl};
 
