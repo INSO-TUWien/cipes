@@ -3,13 +3,15 @@ import * as pouchdb_upsert from 'pouchdb-upsert';
 import getBuildData from './util/db/getBuildData';
 import getCommitData from './util/db/getCommitData';
 import getIssueData from './util/db/getIssueData';
+import getStakeholderData from './util/db/getStakeholderData';
 
 PouchDB.plugin(pouchdb_upsert);
 
 const types = {
   builds: getBuildData,
   commits: getCommitData,
-  issues: getIssueData
+  issues: getIssueData,
+  stakeholders: getStakeholderData
 };
 
 const db = new PouchDB('db');
