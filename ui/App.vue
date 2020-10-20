@@ -18,7 +18,7 @@
 <script>
 import Search from './Search';
 import DbViewer from './DbViewer';
-import json from '../db.json'
+import json from '../db.json';
 
 export default {
   name: 'App',
@@ -38,5 +38,5 @@ function search(query) {
 
 <style>
 @import '~bootstrap/dist/css/bootstrap.css';
-@import "~bootstrap-vue/dist/bootstrap-vue.css";
+@import '~bootstrap-vue/dist/bootstrap-vue.css';
 </style>
