@@ -34,12 +34,6 @@ export default {
 </script>
 
 <style scoped>
-#db {
-  resize: none;
-  height: 100%;
-  width: 100%;
-}
-
 .dbTabs {
   display: flex;
   flex-direction: column;
