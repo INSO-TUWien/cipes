@@ -1,14 +1,19 @@
 <template>
   <div>
     <label for="db" class="sr-only">Database:</label>
-    <textarea id="db" disabled v-model="db" rows="5"></textarea>
+    <textarea id="db" disabled v-model="json" rows="5"></textarea>
   </div>
 </template>
 
 <script>
 export default {
   name: 'DbViewer',
-  props: ['db']
+  props: ['db'],
+  computed: {
+    json: function () {
+      return JSON.stringify(this.db, null, 2);
+    }
+  }
 }
 </script>
 

@@ -3,6 +3,7 @@
 db.json
 /build
 /db
+/dist
 /node_modules
 /src/lib
 /public/assets
