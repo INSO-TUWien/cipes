@@ -9,7 +9,8 @@
     "dev": "webpack-dev-server -d --content-base ui/ --inline --hot",
     "dev-middle": "nodemon --exec babel-node --config .babelrc src/index.js",
     "dev-server": "nodemon --config .nodemonrc cipes.js --no-ci",
-    "prod-middle": "babel src -d build && node build/bemi.js",
+    "prod-semi": "babel src -d build && node build/semi.js",
+    "prod-middle": "babel src -d build && node build/index.js",
     "prod-server": "node cipes.js --no-ci"
   },
   "author": "Raphael Lackner <code@rala.io>",
