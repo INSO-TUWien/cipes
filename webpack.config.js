@@ -8,14 +8,14 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   entry: [
     require.resolve('@babel/polyfill'),
-    './ui/index',
+    './ui/',
     './db.json'
   ],
   output: {
     path: path.resolve(__dirname, './ui/assets'),
     pathinfo: true,
     filename: 'bundle.js',
-    publicPath: 'lib',
+    publicPath: 'assets',
     devtoolModuleFilenameTemplate: info =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
   },
