@@ -38,4 +38,5 @@ function search(query) {
 
 <style>
 @import '~bootstrap/dist/css/bootstrap.css';
+@import "~bootstrap-vue/dist/bootstrap-vue.css";
 </style>

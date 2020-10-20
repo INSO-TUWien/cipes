@@ -1,8 +1,10 @@
 <template>
-  <div>
-    <label for="db" class="sr-only">Database:</label>
-    <textarea id="db" disabled v-model="json" rows="5"></textarea>
-  </div>
+  <b-tabs class="dbTabs h-100">
+    <b-tab title="Json">
+      <label for="db" class="sr-only">Database:</label>
+      <textarea id="db" disabled v-model="json" rows="5"></textarea>
+    </b-tab>
+  </b-tabs>
 </template>
 
 <script>
@@ -18,9 +20,18 @@ export default {
 </script>
 
 <style scoped>
-textarea {
+#db {
   resize: none;
   height: 100%;
   width: 100%;
+}
+
+.dbTabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.dbTabs >>> .tab-content {
+  flex-grow: 1;
 }
 </style>
