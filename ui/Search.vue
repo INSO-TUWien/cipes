@@ -8,7 +8,7 @@
 
         <div class="input-group-append">
           <button type="button" class="btn btn-outline-primary"
-                  v-on:click="$emit('search', searchText, $event)">
+                  @click="$emit('search', searchText, $event)">
             <font-awesome-icon icon="search"/>
           </button>
         </div>

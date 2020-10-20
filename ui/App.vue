@@ -3,12 +3,12 @@
     <div class="d-flex flex-column h-100 p-2">
       <div class="row mb-3">
         <div class="col">
-          <search v-on:search="search"></search>
+          <search @search="search"></search>
         </div>
       </div>
       <div class="row flex-grow-1">
         <div class="col">
-          <db-viewer v-bind:db="db"></db-viewer>
+          <db-viewer :db="db"></db-viewer>
         </div>
       </div>
     </div>
