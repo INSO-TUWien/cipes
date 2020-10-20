@@ -5,6 +5,7 @@ env:
 extends:
   - eslint:recommended
   - prettier
+  - plugin:vue/essential
 rules:
   prettier/prettier:
     - warn
