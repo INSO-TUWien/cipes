@@ -2,15 +2,17 @@
 
 const webpack = require('webpack');
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   devtool: 'cheap-module-source-map',
   entry: [
-    require.resolve('babel-polyfill'),
-    './src/index'
+    require.resolve('@babel/polyfill'),
+    './ui/index',
+    './db.json'
   ],
   output: {
-    path: path.resolve(__dirname, './src/lib'),
+    path: path.resolve(__dirname, './ui/assets'),
     pathinfo: true,
     filename: 'bundle.js',
     publicPath: 'lib',
@@ -24,23 +26,11 @@ module.exports = {
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({debug: true}),
-    new webpack.NamedModulesPlugin()
-  ],
-  devServer: {
-    historyApiFallback: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:48763/',
-        secure: false
-      },
-      '/graphQl': {
-        target: 'http://localhost:48763/',
-        secure: false
-      },
-      '/wsapi': {
-        target: 'ws://localhost:48763',
-        ws: true
+    new webpack.NamedModulesPlugin(),
+    new CopyWebpackPlugin([
+      {
+        from: './db.json'
       }
-    }
-  }
+    ])
+  ]
 };
