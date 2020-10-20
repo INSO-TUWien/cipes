@@ -11,7 +11,7 @@
       <template v-else>
         <div class="row mb-3">
           <div class="col">
-            <search></search>
+            <search v-on:search="search"></search>
           </div>
         </div>
         <div class="row flex-grow-1">
@@ -39,9 +39,14 @@ export default {
     this.loadData();
   },
   methods: {
-    loadData: loadData
+    loadData: loadData,
+    search: search
   }
 };
+
+function search(query) {
+  console.log(query);
+}
 
 function loadData() {
   this.loading = true;

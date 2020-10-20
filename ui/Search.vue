@@ -3,11 +3,13 @@
     <div class="col">
       <div class="input-group">
         <label for="search" class="sr-only">Search:</label>
-        <input type="text" id="search" class="form-control" autocomplete="off">
+        <input type="text" id="search" class="form-control"
+               autocomplete="off" v-model="searchText">
 
         <div class="input-group-append">
-          <button type="button" class="btn btn-outline-primary">
-            <font-awesome-icon icon="search" />
+          <button type="button" class="btn btn-outline-primary"
+                  v-on:click="$emit('search', searchText, $event)">
+            <font-awesome-icon icon="search"/>
           </button>
         </div>
       </div>
@@ -17,6 +19,9 @@
 
 <script>
 export default {
-  name: 'Search'
+  name: 'Search',
+  data: () => ({
+    searchText: ''
+  })
 }
 </script>
