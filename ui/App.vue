@@ -8,7 +8,7 @@
       </div>
       <div class="row flex-grow-1">
         <div class="col">
-          <db-viewer :db="db"></db-viewer>
+          <db-viewer :db="queried"></db-viewer>
         </div>
       </div>
     </div>
@@ -19,12 +19,14 @@
 import Search from './Search';
 import DbViewer from './DbViewer';
 import json from '../db.json';
+import {queryDb} from './utils/search';
 
 export default {
   name: 'App',
   components: {DbViewer, Search},
   data: () => ({
-    db: json
+    db: json,
+    queried: json
   }),
   methods: {
     search: search
@@ -32,7 +34,8 @@ export default {
 };
 
 function search(query) {
-  console.log(query);
+  this.queried = json;
+  this.queried = queryDb(this.db, query);
 }
 </script>
 
