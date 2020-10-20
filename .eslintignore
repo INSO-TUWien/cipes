@@ -1,2 +1,6 @@
+/build
+/db
 /dist
+/foxx
+/lib
 /node_modules

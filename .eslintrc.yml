@@ -1,4 +1,5 @@
 env:
+  browser: true
   es6: true
   node: true
 extends:
@@ -6,7 +7,7 @@ extends:
   - prettier
 rules:
   prettier/prettier:
-    - error
+    - warn
     - singleQuote: true
       printWidth: 100
   no-console: off
@@ -14,5 +15,8 @@ rules:
     - error
     - single
     - avoidEscape: true
+parserOptions:
+  ecmaVersion: 2018
+  sourceType: module
 plugins:
   - prettier
