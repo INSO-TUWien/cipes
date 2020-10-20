@@ -8,6 +8,7 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   entry: [
     require.resolve('@babel/polyfill'),
+    require.resolve('bootstrap'),
     './ui/',
     './db.json'
   ],
@@ -31,6 +32,12 @@ module.exports = {
       {
         from: './db.json'
       }
-    ])
+    ]),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      Popper: ['popper.js', 'default']
+    })
   ]
 };
