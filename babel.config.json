@@ -3,6 +3,9 @@
     "@babel/preset-env"
   ],
   "ignore": [
+    "node_modules/",
+    "build/",
+    "dist/",
     "db.json"
   ]
 }

@@ -7,8 +7,8 @@
     "lint": "eslint .",
     "build": "vue-cli-service build",
     "dev": "vue-cli-service serve",
-    "dev-middle": "nodemon --exec babel-node --config .babelrc src/index.js",
-    "dev-server": "nodemon --config .nodemonrc cipes.js --no-ci",
+    "dev-middle": "nodemon --exec babel-node --config babel.config.json src/index.js",
+    "dev-server": "nodemon cipes.js --no-ci",
     "prod-semi": "babel src -d build && node build/semi.js",
     "prod-middle": "babel src -d build && node build/index.js",
     "prod-server": "node cipes.js --no-ci"

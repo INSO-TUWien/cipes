@@ -1,7 +1,6 @@
 .idea
-.cipesrc
-db.json
 /build
-/db
 /dist
 /node_modules
+.cipesrc
+db.json
