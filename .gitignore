@@ -5,5 +5,3 @@ db.json
 /db
 /dist
 /node_modules
-/src/lib
-/public/assets
