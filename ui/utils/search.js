@@ -1,5 +1,7 @@
 import {getPropertiesViaPath} from './core';
 
+const regex = /(-?)((\w+)(\.\w+)*)(\??)([~=<>]=?)(.*)/;
+
 export function queryDb(db, query) {
   if (typeof db !== 'object' && typeof query !== 'string') return null;
   db = JSON.parse(JSON.stringify(db)); // Object.assign?
@@ -25,7 +27,7 @@ export function queryDb(db, query) {
 
 function extractQueries(query) {
   return query.split(' ').map(part => {
-    const matches = part.match(/(-?)((\w+)(\.\w+)*)(\??)([~=<>]=?)(.*)/);
+    const matches = part.match(regex);
     return matches ? {
       not: matches[1].length === 1,
       path: matches[2],
