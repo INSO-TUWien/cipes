@@ -57,13 +57,13 @@ function extractQueries(query) {
   }
 
   function getComparisonFunction(check, propValue) {
-    if (check === '==') check = '=';
+    if (check === '=') check = '==';
     else if (check === '~') check = '~=';
     return value => {
       if (typeof value === 'number' && !isNaN(propValue))
         propValue = +propValue;
       switch (check) {
-        case '=':
+        case '==':
           return value === propValue;
         case '~=':
           return value.includes(propValue);
