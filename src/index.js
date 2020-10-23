@@ -40,7 +40,7 @@ function saveData(data) {
   fs.writeFile('db.json', JSON.stringify(data), () => {
     console.log('data successfully saved');
     if (prodServer) {
-      prodServer.kill('SIGKILL');
+      prodServer.kill('SIGINT');
       process.exit();
     }
   });
