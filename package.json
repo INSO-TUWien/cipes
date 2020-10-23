@@ -9,6 +9,7 @@
     "dev": "vue-cli-service serve",
     "dev-middle": "nodemon --exec babel-node --config babel.config.json src/index.js",
     "dev-server": "nodemon cipes.js --no-ci",
+    "prod": "npm run prod-semi && npm run build",
     "prod-semi": "babel src -d build && node build/semi.js",
     "prod-middle": "babel src -d build && node build/index.js",
     "prod-server": "node cipes.js --no-ci"
