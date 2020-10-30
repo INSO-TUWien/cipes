@@ -8,7 +8,7 @@ extends:
   - plugin:vue/essential
 rules:
   prettier/prettier:
-    - warn
+    - off
     - singleQuote: true
       printWidth: 100
   no-console: off
