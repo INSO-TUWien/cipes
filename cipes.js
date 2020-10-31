@@ -48,9 +48,6 @@ const port = config.get().port;
 
 httpServer.listen(port, function() {
   console.log(`Listening on http://localhost:${port}`);
-  if (argv.ui && argv.open) {
-    opn(`http://localhost:${port}/`);
-  }
 });
 
 const indexers = {
