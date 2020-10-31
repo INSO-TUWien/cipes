@@ -19,4 +19,4 @@ COPY docker.sh ./
 RUN chmod +x docker.sh
 RUN BUILD_ONLY=true npm install -q nodegit@0.25.0
 RUN npm install -q
-ENTRYPOINT ["/home/cipes/docker.sh"]
+ENTRYPOINT bash
