@@ -17,7 +17,7 @@ init();
 
 export function init(server = null) {
   prodServer = server;
-  loadData().then(mapData).then(saveData);
+  loadData().then(mapData).then(saveData).catch(console.error);
 }
 
 function loadData() {
