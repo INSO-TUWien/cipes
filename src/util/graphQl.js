@@ -37,6 +37,7 @@ export function traversePageWithSubPages(getPage, fn) {
       if (data)
         data.forEach(dataItem => dataItem.list.forEach(item => {
           const found = list.find(i => i.sha === item.sha);
+          if (!found || !found[dataItem.page.key]) return;
           found[dataItem.page.key].data.unshift(...item[dataItem.page.key].data);
         }));
       const keys = getKeyAttributes(list);
