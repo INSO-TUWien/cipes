@@ -17,7 +17,7 @@
         </div>
 
         <small class="form-text text-muted">
-          Valid query pattern: <code>-?\w+(\.\w+)*\??[~=&lt;&gt;]=?.*</code>
+          Query pattern: <code>-?\w+(\.\w+)*\??[~=&lt;&gt;]=?.*</code>
         </small>
       </div>
     </div>
