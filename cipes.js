@@ -85,7 +85,7 @@ Repository.fromPath(ctx.targetPath)
     return reIndex();
 
     function reIndex() {
-      console.log('Indexing data...');
+      console.log('Indexing data...', ctx.repo.path);
       indexers.vcs = idx.makeVCSIndexer(ctx.repo, reporter);
 
       if (ctx.argv.its) {
