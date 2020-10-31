@@ -11,8 +11,10 @@
     "dev-middle": "nodemon --exec babel-node --config babel.config.json src/index.js",
     "dev-server": "nodemon cipes.js",
     "prod": "npm run prod-semi && npm run vbuild",
+    "prod-github": "npm run prod-semi-github && npm run vbuild",
     "prod-gitlab": "npm run prod-semi-gitlab && npm run vbuild",
     "prod-semi": "npm run bbuild && node build/semi.js",
+    "prod-semi-github": "npm run bbuild && node build/semi-github.js",
     "prod-semi-gitlab": "npm run bbuild && node build/semi-gitlab.js",
     "prod-middle": "npm run bbuild && node build/index.js",
     "prod-server": "node cipes.js"
