@@ -15,4 +15,5 @@ if [ ! -f $cipesrcFile ] && [ -n "$CI_PROJECT_DIR" ] &&
   echo "    \"token\": \"$CI_JOB_TOKEN\"" >>"$cipesrcFile"
   echo "  }" >>"$cipesrcFile"
   echo "}" >>"$cipesrcFile"
+  echo "">>"$cipesrcFile"
 fi
