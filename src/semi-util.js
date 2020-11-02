@@ -1,4 +1,4 @@
-import {init} from '.';
+import {init} from './main';
 
 export function addDataListener(prodServer) {
   prodServer.stdout.on('data', data => {
