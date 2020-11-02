@@ -16,6 +16,9 @@ replace it with `/root`._
 
 Loads `~/alias.sh` and makes internal preparations.
 
+Provided `variable`s:
+- `cipesrcFile`: path to `.cipesrc` File
+
 #### ~/alias.sh
 
 Provided `alias`es:
@@ -31,8 +34,8 @@ Basic `.gitlab-ci` file:
 index:
   image: rala72/cipes
   before_script:
-    - cp $cipesrc $CI_PROJECT_DIR/.cipesrc
     - source ~/.bashrc
+    - cp $cipesrc $cipesrcFile
   script: cipes-gitlab
   after_script:
     - source ~/alias.sh
@@ -43,11 +46,13 @@ index:
       - cipes/
 ```
 
-*Explanation*:
-Before the script your `$cipesrc` _(see next section)_
-is copied to your project folder.
-Then the main script is executed.
-Afterwards the produced files are saved to your project directory
+*Explanation*:\
+First intern preparations have to run and
+`.cipesrc` have to be copied.\
+Next the main script is executed 
+which indices your repository.\
+Afterwards the produced files
+are saved to your project directory
 so it can be provided as artifacts.
 
 Optionally you can also get the `db.json` itself by adding:
