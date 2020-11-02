@@ -9,6 +9,9 @@ Supported Git Systems:
 
 ### Provided scripts
 
+_Note: If `~` is not working for you
+replace it with `/root`._
+
 #### ~/.bashrc
 
 Loads `~/alias.sh` and makes internal preparations.
@@ -20,9 +23,9 @@ Provided `alias`es:
 
 Provided `variable`s:
 - `cipesDir`: root path of cipes
-- `cipesDist`: path of dist folder
+- `cipesDist`: path of `dist` folder
 
-## GitLab CI Configuration
+## GitLab - CI Configuration
 Basic `.gitlab-ci` file:
 ```yaml
 index:
@@ -53,9 +56,9 @@ after_script:
   - cp $cipesDir/db.json $CI_PROJECT_DIR/cipes/
 ```
 
-### GitLab Variables
-`$cipesrc` with type `File`:
-
+### GitLab - Custom Variables
+An API access is required therefore
+specify a variable named `$cipesrc` with type `File`:
 ```json
 {
   "gitlab": {
