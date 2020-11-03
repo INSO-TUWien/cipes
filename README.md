@@ -9,15 +9,14 @@ Supported Git Systems:
 
 ### Provided scripts
 
-_Note: If `~` is not working for you
-replace it with `/root`._
+_Note: If `~` is not working replace it with `/root`._
 
 #### ~/.bashrc
 
 Loads `~/alias.sh` and makes internal preparations.
 
 Provided `variable`s:
-- `cipesrcFile`: path to `.cipesrc` File
+- `cipesrcPath`: path to `.cipesrc` File
 
 #### ~/alias.sh
 
@@ -33,9 +32,11 @@ Basic `.gitlab-ci` file:
 ```yaml
 index:
   image: rala72/cipes
+  variables:
+    GIT_DEPTH: 0
   before_script:
     - source ~/.bashrc
-    - cp $cipesrc $cipesrcFile
+    - cp $cipesrc $cipesrcPath
   script: cipes-gitlab
   after_script:
     - source ~/alias.sh
@@ -54,6 +55,9 @@ which indices your repository.\
 Afterwards the produced files
 are saved to your project directory
 so it can be provided as artifacts.
+
+Make sure to disable shallow clone
+by setting `GIT_DEPTH` to `0`.
 
 Optionally you can also get the `db.json` itself by adding:
 ```yaml
