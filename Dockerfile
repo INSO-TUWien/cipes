@@ -1,8 +1,8 @@
-FROM arangodb:3.1.28 as arangodb
-
-FROM node:12
-COPY --from=arangodb / /
-RUN chown -R arangodb:arangodb /var/lib/arangodb3*
+FROM arangodb:3.3.9
+RUN apt-get update -q && apt-get upgrade -qq
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN apt-get install -qq git nodejs
+RUN apt-get install -qq build-essential libc-dev libkrb5-dev
 WORKDIR /home/cipes
 COPY package*.json ./
 RUN BUILD_ONLY=true npm install -q nodegit@0.25.0
