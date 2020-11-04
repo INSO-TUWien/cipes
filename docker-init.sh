@@ -5,7 +5,13 @@ source /root/alias.sh
 arangod --server.endpoint tcp://0.0.0.0:8529 --database.password 'supersecret' &
 sleep 5
 
-export cipesrcPath="$CI_PROJECT_DIR/.cipesrc"
+export cipesrcPath=""
+if [ -n "$CI_PROJECT_DIR" ]; then
+  cipesrcPath="$CI_PROJECT_DIR/.cipesrc"
+elif [ -n "$GITHUB_WORKSPACE" ]; then
+  cipesrcPath="$GITHUB_WORKSPACE/.cipesrc"
+fi
+
 if [ ! -f $cipesrcPath ] && [ -n "$CI_PROJECT_DIR" ] &&
   [ -n "$CI_SERVER_URL" ] && [ -n "$CI_JOB_TOKEN" ]; then
 
@@ -15,5 +21,5 @@ if [ ! -f $cipesrcPath ] && [ -n "$CI_PROJECT_DIR" ] &&
   echo "    \"token\": \"$CI_JOB_TOKEN\"" >>"$cipesrcPath"
   echo "  }" >>"$cipesrcPath"
   echo "}" >>"$cipesrcPath"
-  echo "">>"$cipesrcPath"
+  echo "" >>"$cipesrcPath"
 fi
