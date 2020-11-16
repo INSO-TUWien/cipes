@@ -13,7 +13,6 @@ const paginated = require('./types/paginated.js');
 const queryHelpers = require('./query-helpers.js');
 const Timestamp = require('./types/Timestamp.js');
 const Sort = require('./types/Sort.js');
-const DateHistogramGranularity = require('./types/DateHistogramGranularity.js');
 
 const commits = db._collection('commits');
 const files = db._collection('files');
@@ -70,50 +69,6 @@ const queryType = new gql.GraphQLObjectType({
           return commits.document(args.sha);
         }
       },
-      commitDateHistogram: makeDateHistogramEndpoint(commits, 'date', {
-        args: {
-          buildFilter: {
-            type: new gql.GraphQLEnumType({
-              name: 'BuildFilter',
-              values: {
-                successful: {
-                  value: 'successful'
-                },
-                failed: {
-                  value: 'failed'
-                },
-                all: {
-                  value: 'all'
-                }
-              }
-            }),
-            description: 'Include/exclude commits that have successful builds'
-          }
-        },
-        makeFilter: args => {
-          if (!args.buildFilter || args.buildFilter === 'all') {
-            return true;
-          }
-
-          const comparatorMap = {
-            successful: 'gt',
-            failed: 'eq'
-          };
-
-          return qb[comparatorMap[args.buildFilter]](
-            qb.LENGTH(
-              qb
-                .for('build')
-                .in('builds')
-                .filter(
-                  qb.and(qb.eq('build.sha', 'item.sha'), qb.eq('build.status', qb.str('success')))
-                )
-                .return(1)
-            ),
-            0
-          );
-        }
-      }),
       file: {
         type: require('./types/file.js'),
         args: {
@@ -214,28 +169,7 @@ const queryType = new gql.GraphQLObjectType({
 
           return q;
         }
-      }),
-      issue: {
-        type: require('./types/issue.js'),
-        args: {
-          iid: {
-            description: 'Project-Internal issue number',
-            type: new gql.GraphQLNonNull(gql.GraphQLInt)
-          }
-        },
-        resolve(root, args) {
-          return db
-            ._query(
-              aql`FOR issue
-                  IN
-                  ${issues}
-                  FILTER issue.iid == ${args.iid}
-                    RETURN issue`
-            )
-            .toArray()[0];
-        }
-      },
-      issueDateHistogram: makeDateHistogramEndpoint(issues)
+      })
     };
   }
 });
@@ -243,43 +177,3 @@ const queryType = new gql.GraphQLObjectType({
 module.exports = new gql.GraphQLSchema({
   query: queryType
 });
-
-function makeDateHistogramEndpoint(collection, dateFieldName, {makeFilter, args} = {}) {
-  const extendedArgs = Object.assign(
-    {
-      granularity: {
-        type: new gql.GraphQLNonNull(DateHistogramGranularity)
-      }
-    },
-    args
-  );
-
-  if (!dateFieldName) {
-    extendedArgs.dateField = {
-      type: new gql.GraphQLNonNull(gql.GraphQLString)
-    };
-  }
-
-  return {
-    type: require('./types/histogram.js')(gql.GraphQLInt),
-    args: extendedArgs,
-    resolve(root, args) {
-      let q = qb.for('item').in(collection);
-
-      if (makeFilter) {
-        q = q.filter(makeFilter(args));
-      }
-
-      q = q
-        .collect('category', args.granularity(`item.${dateFieldName || args.dateField}`))
-        .withCountInto('length')
-        .return({
-          category: 'category',
-          count: 'length'
-        })
-        .toAQL();
-
-      return db._query(q).toArray();
-    }
-  };
-}
