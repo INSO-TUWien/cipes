@@ -89,7 +89,8 @@ function getKeyAttributes(list) {
   const firstDataEntry = 0 < list.length ? list[0] : {};
   return Object.keys(firstDataEntry).filter(key => {
     const attribute = firstDataEntry[key];
-    return attribute.page !== undefined &&
+    return attribute &&
+      attribute.page !== undefined &&
       attribute.count !== undefined &&
       attribute.perPage !== undefined;
   });
