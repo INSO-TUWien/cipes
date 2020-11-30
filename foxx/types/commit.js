@@ -63,10 +63,10 @@ module.exports = new gql.GraphQLObjectType({
           name: 'Commits',
           fields: {
             from: {
-              type: gql.GraphQLString
+              type: new gql.GraphQLList(gql.GraphQLString)
             },
             to: {
-              type: gql.GraphQLString
+              type: new gql.GraphQLList(gql.GraphQLString)
             }
           }
         }),
@@ -76,15 +76,15 @@ module.exports = new gql.GraphQLObjectType({
             ._query(
               aql`
               RETURN MERGE(  
-                (
+                {from:(
                 FOR commit IN INBOUND ${commit} ${commitsToCommits}
-                RETURN {from:commit.sha}
-                )[0] || {from:null}
+                RETURN commit.sha
+                )}
                 ,
-                (
+                {to:(
                 FOR commit IN OUTBOUND ${commit} ${commitsToCommits}
-                RETURN {to:commit.sha}
-                )[0] || {to:null}
+                RETURN commit.sha
+                )}
               )`
             ).toArray()[0];
         }
