@@ -68,7 +68,7 @@ function extractQueries(query) {
         case '==':
           return value === propValue;
         case '~=':
-          return value.includes(propValue);
+          return (value || '').includes(propValue);
         case '<':
           return value < propValue;
         case '<=':
