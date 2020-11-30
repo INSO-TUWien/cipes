@@ -28,6 +28,10 @@ const getCommitsPage = () => (page, perPage, filesPage, filesPerPage) => {
           message
           messageHeader
           webUrl
+          commits {
+            from
+            to
+          }
           files(page: $filesPage, perPage: $filesPerPage) {
             page
             perPage
