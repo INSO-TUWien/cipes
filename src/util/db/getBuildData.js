@@ -31,6 +31,25 @@ const getBuildsPage = (page, perPage) => {
           beforeSha
           ref
           status
+          detailedStatus {
+            icon
+            text
+            label
+            group
+            tooltip
+            has_details
+            illustration
+            favicon
+          }
+          tag
+          user {
+            id
+            name
+            username
+            state
+            avatar_url
+            web_url
+          }
           createdAt
           updatedAt
           startedAt
@@ -50,6 +69,7 @@ const getBuildsPage = (page, perPage) => {
           }
           commit {
             sha
+            shortSha
             message
             messageHeader
           }

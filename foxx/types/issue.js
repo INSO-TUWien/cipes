@@ -7,11 +7,16 @@ const aql = arangodb.aql;
 const issuesToStakeholders = db._collection('issues-stakeholders');
 const paginated = require('./paginated.js');
 const Timestamp = require('./Timestamp.js');
+const User = require('./User.js');
 
 module.exports = new gql.GraphQLObjectType({
   name: 'Issue',
   description: 'A GitLab issue',
   fields() {
+    // ArangoDB has much more fields than lib or foxx:
+    // projectId, [closedBy], discussionLocked,
+    // timeStats{}, taskCompletionStatus{},
+    // blockingIssuesCount, hasTasks, links
     return {
       id: {
         type: new gql.GraphQLNonNull(gql.GraphQLString),
@@ -32,6 +37,37 @@ module.exports = new gql.GraphQLObjectType({
       state: {
         type: gql.GraphQLString,
         description: 'The issue state'
+      },
+      url: {
+        type: gql.GraphQLString
+      },
+      createdAt: {
+        type: Timestamp,
+        description: 'Creation date of the issue'
+      },
+      updatedAt: {
+        type: Timestamp,
+        description: 'Update date of the issue'
+      },
+      closedAt: {
+        type: Timestamp,
+        description: 'Close date of the issue'
+      },
+      closedBy: {
+        type: User
+      },
+      labels: {
+        type: new gql.GraphQLList(gql.GraphQLString)
+      },
+      milestone: {
+        type: gql.GraphQLString
+      },
+      author: {
+        type: User
+      },
+      // assignee[s]
+      userNotesCount: {
+        type: gql.GraphQLInt,
       },
       upvotes: {
         type: gql.GraphQLInt,
@@ -57,14 +93,7 @@ module.exports = new gql.GraphQLObjectType({
         type: gql.GraphQLString,
         description: 'Web URL of the issue'
       },
-      createdAt: {
-        type: Timestamp,
-        description: 'Creation date of the issue'
-      },
-      closedAt: {
-        type: Timestamp,
-        description: 'Close date of the issue'
-      },
+      // subscribed
       creator: {
         type: require('./stakeholder.js'),
         description: 'The creator of this issue',
@@ -82,7 +111,7 @@ module.exports = new gql.GraphQLObjectType({
             .toArray()[0];
         }
       },
-      commits: paginated({
+      commits: paginated({ // 'issues-commits'
         type: require('./commit.js'),
         description: 'All commits mentioning this issue',
         query: (issue, args, limit) => aql`

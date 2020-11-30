@@ -23,8 +23,28 @@ const getIssuesPage = () => (page, perPage, commitsPage, commitsPerPage) => {
           title
           description
           state
-          closedAt
           createdAt
+          updatedAt
+          closedAt
+          closedBy {
+            id
+            name
+            username
+            state
+            avatar_url
+            web_url
+          }
+          labels
+          milestone
+          author {
+            id
+            name
+            username
+            state
+            avatar_url
+            web_url
+          }
+          userNotesCount
           upvotes
           downvotes
           dueDate

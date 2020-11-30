@@ -5,6 +5,7 @@ const arangodb = require('@arangodb');
 const db = arangodb.db;
 const aql = arangodb.aql;
 const Timestamp = require('./Timestamp.js');
+const User = require('./User.js');
 const commits = db._collection('commits');
 
 const BuildStatus = new gql.GraphQLEnumType({
@@ -55,6 +56,41 @@ const Job = new gql.GraphQLObjectType({
   }
 });
 
+const DetailedStatus = new gql.GraphQLObjectType({
+  name: 'DetailedStatus',
+  fields() {
+    return {
+      icon: {
+        type: gql.GraphQLString
+      },
+      text: {
+        type: gql.GraphQLString
+      },
+      label: {
+        type: gql.GraphQLString
+      },
+      group: {
+        type: gql.GraphQLString
+      },
+      tooltip: {
+        type: gql.GraphQLString
+      },
+      has_details: {
+        type: gql.GraphQLBoolean
+      },
+      details_path: {
+        type: gql.GraphQLString
+      },
+      illustration: {
+        type: gql.GraphQLString
+      },
+      favicon: {
+        type: gql.GraphQLString
+      }
+    }
+  }
+})
+
 module.exports = new gql.GraphQLObjectType({
   name: 'Build',
   description: 'A single of a CI build run',
@@ -78,9 +114,16 @@ module.exports = new gql.GraphQLObjectType({
         type: BuildStatus,
         description: 'Status of the build'
       },
-      webUrl: {
-        type: gql.GraphQLString,
-        description: 'Web-url of this build'
+      detailedStatus: {
+        // not in lib?
+        type: DetailedStatus
+      },
+      tag: {
+        type: gql.GraphQLBoolean
+      },
+      // yamlErrors - what format?
+      user: {
+        type: User
       },
       createdAt: {
         type: Timestamp,
@@ -109,6 +152,10 @@ module.exports = new gql.GraphQLObjectType({
       coverage: {
         type: gql.GraphQLString,
         description: 'Coverage information'
+      },
+      webUrl: {
+        type: gql.GraphQLString,
+        description: 'Web-url of this build'
       },
       stats: {
         type: new gql.GraphQLObjectType({
