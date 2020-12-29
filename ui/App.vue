@@ -21,6 +21,8 @@ import DbViewer from './DbViewer';
 import json from '../db.json';
 import {queryDb} from './utils/search';
 
+window.data = json;
+
 export default {
   name: 'App',
   components: {DbViewer, Search},
