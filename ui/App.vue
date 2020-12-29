@@ -36,24 +36,29 @@ export default {
   }),
   methods: {
     search: search,
-    searchJMES: searchJMES
+    searchJMES: searchJMES,
+    updateQueried: updateQueried
   }
 };
 
 function search(query) {
-  this.queried = this.db;
+  this.updateQueried(this.db);
   this.jmes = false;
-  this.queried = queryDb(this.db, query);
+  this.updateQueried(queryDb(this.db, query));
 }
 
 function searchJMES(query) {
-  this.queried = this.db;
+  this.updateQueried(this.db);
   if (query === '') {
     this.jmes = false;
     return;
   }
   this.jmes = true;
-  this.queried = jmespath.search(this.db, query);
+  this.updateQueried(jmespath.search(this.db, query));
+}
+
+function updateQueried(data = this.db) {
+  window.queried = this.queried = data;
 }
 </script>
 
