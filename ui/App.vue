@@ -48,7 +48,10 @@ function search(query) {
 
 function searchJMES(query) {
   this.queried = this.db;
-  if (query === '') return;
+  if (query === '') {
+    this.jmes = false;
+    return;
+  }
   this.jmes = true;
   this.queried = jmespath.search(this.db, query);
 }
