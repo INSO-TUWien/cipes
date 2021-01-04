@@ -6,7 +6,7 @@
           <label for="search" class="sr-only">Search:</label>
           <input type="text" id="search" class="form-control"
                  autocomplete="off" v-model="searchText"
-                 @keypress.enter="$emit(jmes?'searchJMES':'search', searchText, $event)">
+                 @keypress.enter="$emit(getSearchType($event), searchText, $event)">
 
           <div class="input-group-append">
             <button type="button" class="btn btn-outline-primary" title="Search"
@@ -47,8 +47,16 @@ export default {
       default: false
     }
   },
+  methods: {
+    getSearchType: getSearchType
+  },
   data: () => ({
     searchText: ''
   })
+}
+
+function getSearchType(event) {
+  if (event.shiftKey) return this.jmes ? 'search' : 'searchJMES';
+  return this.jmes ? 'searchJMES' : 'search';
 }
 </script>
