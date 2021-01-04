@@ -1,4 +1,4 @@
-FROM arangodb:3.3.9
+FROM arangodb:3.3.25
 RUN apt-get update -q && apt-get upgrade -qq
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt-get install -qq git nodejs
