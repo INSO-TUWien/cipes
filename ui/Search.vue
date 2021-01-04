@@ -25,11 +25,11 @@
             Query pattern: <code>-?\w+(\.\w+)*\??[~=&lt;&gt;]=?.*</code>
           </template>
           <template v-if="searchText===''">
-            &bullet;
+            ||
           </template>
           <template v-if="jmes || searchText===''">
             <a href="https://jmespath.org/specification.html" target="_blank">JMES Path Specification</a>
-            |
+            /
             <a href="https://github.com/nanoporetech/jmespath-plus" target="_blank">JMES Path Plus</a>
           </template>
         </small>
