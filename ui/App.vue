@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import jmespath from 'jmespath';
+import jmespath from '@metrichor/jmespath-plus';
 import Search from './Search';
 import DbViewer from './DbViewer';
 import json from '../db.json';

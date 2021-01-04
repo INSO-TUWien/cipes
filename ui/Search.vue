@@ -26,6 +26,8 @@
           </template>
           <template v-else>
             <a href="https://jmespath.org/specification.html" target="_blank">JMES Path Specification</a>
+            |
+            <a href="https://github.com/nanoporetech/jmespath-plus" target="_blank">JMES Path Plus</a>
           </template>
         </small>
       </div>
