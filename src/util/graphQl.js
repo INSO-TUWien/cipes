@@ -35,11 +35,12 @@ export function traversePageWithSubPages(getPage, fn) {
     .then(resolveRecursivePromise)
     .then(data => {
       if (data)
-        data.forEach(dataItem => dataItem.list.forEach(item => {
-          const found = list.find(i => i.sha === item.sha);
-          if (!found || !found[dataItem.page.key]) return;
-          found[dataItem.page.key].data.unshift(...item[dataItem.page.key].data);
-        }));
+        data.filter(dataItem => dataItem.list)
+          .forEach(dataItem => dataItem.list.forEach(item => {
+            const found = list.find(i => i.sha === item.sha);
+            if (!found || !found[dataItem.page.key]) return;
+            found[dataItem.page.key].data.unshift(...item[dataItem.page.key].data);
+          }));
       const keys = getKeyAttributes(list);
       _.each(list.map(item => {
         delete item._page;
