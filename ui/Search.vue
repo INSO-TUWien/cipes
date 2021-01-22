@@ -9,12 +9,14 @@
                  @keypress.enter="$emit(getSearchType($event), searchText, $event)">
 
           <div class="input-group-append">
-            <button type="button" class="btn btn-outline-primary" title="Search"
-                    @click="$emit('search', searchText, $event)">
+            <button type="button" class="btn"
+                    v-bind:class="[!jmes ? 'btn-primary' : 'btn-outline-primary']"
+                    title="Search" @click="$emit('search', searchText, $event)">
               <font-awesome-icon icon="search"/>
             </button>
-            <button type="button" class="btn btn-outline-primary" title="JMES Path"
-                    @click="$emit('searchJMES', searchText, $event)">
+            <button type="button" class="btn"
+                    v-bind:class="[jmes ? 'btn-primary' : 'btn-outline-primary']"
+                    title="JMES Path" @click="$emit('searchJMES', searchText, $event)">
               <font-awesome-icon :icon="['fab','searchengin']"/>
             </button>
           </div>
