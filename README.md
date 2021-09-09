@@ -31,7 +31,7 @@ Provided `variable`s:
 Basic `.gitlab-ci` file:
 ```yaml
 index:
-  image: rala72/cipes
+  image: insotuwien/cipes
   variables:
     GIT_DEPTH: 0
   before_script:
